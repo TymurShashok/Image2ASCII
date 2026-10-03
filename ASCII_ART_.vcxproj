@@ -128,7 +128,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ASCIIConverter.cpp" />
     <ClCompile Include="ASCII_ART_.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ASCIIConverter.h" />
+    <ClInclude Include="Pixel.h" />
+    <ClInclude Include="Renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
