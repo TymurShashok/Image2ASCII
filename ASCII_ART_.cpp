@@ -3,7 +3,7 @@
 #include "ASCIIConverter.h"
 
 int main() {
-	cv::Mat image = cv::imread("image1.jpg", cv::IMREAD_COLOR); // Folder with sln
+	cv::Mat image = cv::imread("image.jpg", cv::IMREAD_COLOR); // Folder with sln
 
 	if (image.empty()) { // if file not opening or empty
 		std::cout << "Can`t load a image.jpg" << std::endl;
