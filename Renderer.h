@@ -10,5 +10,5 @@ class Renderer {
 public:
 	std::string printASCIISymbols(ASCIIConverter ASCIIConverter);
 	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image);
-	
+
 };
