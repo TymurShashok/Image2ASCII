@@ -1,0 +1,5 @@
+﻿  ASCII_ART_.cpp
+C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\ASCII_ART_\ASCII_ART_.cpp(12,55): warning C4244: '=': conversion from 'double' to 'byte', possible loss of data
+C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\ASCII_ART_\ASCII_ART_.cpp(77,65): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\ASCII_ART_\ASCII_ART_.cpp(77,62): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  ASCII_ART_.vcxproj -> C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\x64\Debug\ASCII_ART_.exe
