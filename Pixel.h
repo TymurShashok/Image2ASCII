@@ -5,11 +5,11 @@ class PIXEL {
 	unsigned char  B;
 	unsigned char  G;
 	unsigned char  R;
-	unsigned char  Brightness;
+	double  Brightness;
 
 public:
 
-	unsigned char getBrightness() {
+	double getBrightness() {
 		return Brightness = (0.299 * R) + (0.587 * G) + (0.114 * B);
 	}
 

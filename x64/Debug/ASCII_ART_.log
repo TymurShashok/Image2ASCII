@@ -1,5 +1,4 @@
 ﻿  ASCII_ART_.cpp
-C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\ASCII_ART_\Pixel.h(13,49): warning C4244: '=': conversion from 'double' to 'unsigned char', possible loss of data
-  (compiling source file 'ASCII_ART_.cpp')
-  
+  Renderer.cpp
+  Generating Code...
   ASCII_ART_.vcxproj -> C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\x64\Debug\ASCII_ART_.exe

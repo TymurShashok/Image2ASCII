@@ -6,7 +6,7 @@
 enum color { BlackWhite, RGB };
 
 class Renderer {
-	color colorMode = RGB; // BlackWhite or RGB
+	color colorMode = BlackWhite; // BlackWhite or RGB
 public:
 	std::string printASCIISymbols(ASCIIConverter ASCIIConverter);
 	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image);

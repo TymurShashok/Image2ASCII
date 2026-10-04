@@ -35,7 +35,7 @@ char ASCIIConverter::BrightnessToASCIISymbol() {
 	}
 	}
 
-	int index = (pixel.getBrightness() * (activeLength - 1) / 255); // Choice a symbol
+	int index = (static_cast<int>(pixel.getBrightness()) * (activeLength - 1) / 255); // Choice a symbol
 
 	return activeASCIISymbols[index];
 }

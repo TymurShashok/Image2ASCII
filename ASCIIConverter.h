@@ -11,7 +11,7 @@ public:
 	howManySymbols getSymbolsMode() {
 		return mode;
 	}
-	unsigned char getBrightness() {
+	double getBrightness() {
 		return pixel.getBrightness();
 	}
 	void setSymbolsMode(howManySymbols mode) {
@@ -35,7 +35,6 @@ public:
 	void setGreen(unsigned char green) {
 		pixel.setGreen(green);
 	}
-
 
 	char BrightnessToASCIISymbol();
 };
