@@ -13,7 +13,7 @@ struct config
 
 	short width = 100; // Result Width
 	short height = 100; // Result Height
-	config() { fileName = "friren.jpg"; symbols = Medium; colorMode = RGB; width = 200; height = 200; } // Default 
+	config() { fileName = "image.jpg"; symbols = Medium; colorMode = RGB; width = 200; height = 200; } // Default 
 
 	config(int argc, char* argv[]) { // Working Programm
 

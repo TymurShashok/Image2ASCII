@@ -47,9 +47,9 @@ void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,con
 			ASCIIConverter.setRed(bgrPixel[2]);
 
 
-			ASCIIConverter.getBrightness();
-			file << ASCIIConverter.BrightnessToASCIISymbol(conf);
-			std::cout << printASCIISymbols(ASCIIConverter, conf);
+			ASCIIConverter.getBrightness(); 
+			file << ASCIIConverter.BrightnessToASCIISymbol(conf); // Save a ASCII Symbol in File.TXT
+			std::cout << printASCIISymbols(ASCIIConverter, conf); // Print a Symbol with using of Color-System 
 		}
 		file << std::endl;
 		std::cout << std::endl;

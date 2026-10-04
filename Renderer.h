@@ -7,15 +7,14 @@
 * @class Renderer
 * @brief system a responsibile for print ASCII;
 */
+
 class Renderer 
 {
 
 public:
-	/**
-	* @brief Enabling a ANSI colors for Terminal
-	*/
-	void enableANSIColors(); 
-	std::string printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf);
+
+	void enableANSIColors(); // Enabling a ANSI colors for Terminal
+	std::string printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf); 
 	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,const config& conf);
 
 };

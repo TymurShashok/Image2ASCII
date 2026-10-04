@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "ASCIIConverter.h"
 #include "Config.h"
+
 /*@project Image2ASCII
 * @version v1.0.3
 * @date 04.10.2026
@@ -40,4 +41,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-// 

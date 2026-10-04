@@ -1,7 +1,9 @@
 #pragma once
 
-// @class PIXEL
-// @formula Brightness = (0.299 * Red) + (0.587 * Green) + (0.114 * Blue)
+/**
+*@class PIXEL
+*@formulaLuma Brightness = (0.299 * Red) + (0.587 * Green) + (0.114 * Blue)
+*/
 
 class PIXEL
 {
@@ -11,11 +13,9 @@ class PIXEL
 
 	double  Brightness = 0.0;
 public:
-	/**
-	* @formula find a Brightness level of Pixel;
-	*/
+
 	double getBrightness() {
-		return Brightness = (0.299 * R) + (0.587 * G) + (0.114 * B); // @formula
+		return Brightness = (0.299 * R) + (0.587 * G) + (0.114 * B); // Finding brightness level (0 - 255)
 	}
 	/**
 	* ------ getters -----
