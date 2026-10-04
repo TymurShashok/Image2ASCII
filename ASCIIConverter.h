@@ -1,21 +1,13 @@
 #pragma once
 #include "Pixel.h"
-
-enum howManySymbols { smallSymb, mediumSymb, largeSymb };
+#include "Config.h"
 
 class ASCIIConverter {
 private:
 	PIXEL pixel;
-	howManySymbols mode = mediumSymb;
 public:
-	howManySymbols getSymbolsMode() {
-		return mode;
-	}
 	double getBrightness() {
 		return pixel.getBrightness();
-	}
-	void setSymbolsMode(howManySymbols mode) {
-		this->mode = mode;
 	}
 	unsigned char getRed() {
 		return pixel.getRed();
@@ -36,5 +28,5 @@ public:
 		pixel.setGreen(green);
 	}
 
-	char BrightnessToASCIISymbol();
+	char BrightnessToASCIISymbol(config conf);
 };

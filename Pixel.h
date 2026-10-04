@@ -2,10 +2,10 @@
 
 class PIXEL {
 
-	unsigned char  B;
-	unsigned char  G;
-	unsigned char  R;
-	double  Brightness;
+	unsigned char  B = 0;
+	unsigned char  G = 0;
+	unsigned char  R = 0;
+	double  Brightness = 0.0;
 
 public:
 

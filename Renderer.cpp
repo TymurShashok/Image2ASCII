@@ -7,28 +7,24 @@
 #include "ASCIIConverter.h"
 
 
-std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter)
+std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter, config conf)
 {
-	if (colorMode == 1) {
+	if (conf.colorMode == RGB) {
 		return "\33[38;2;" + std::to_string((int)ASCIIConverter.getRed()) + ";" + std::to_string((int)ASCIIConverter.getGreen()) +
-			";" + std::to_string((int)ASCIIConverter.getBlue()) + "m" + std::string(1, ASCIIConverter.BrightnessToASCIISymbol()) + "\033[0m";
+			";" + std::to_string((int)ASCIIConverter.getBlue()) + "m" + std::string(1, ASCIIConverter.BrightnessToASCIISymbol(conf)) + "\033[0m";
 	}
-	else {
-		return std::string(1, ASCIIConverter.BrightnessToASCIISymbol());
+	else{
+		return std::string(1, ASCIIConverter.BrightnessToASCIISymbol(conf));
 	}
 }
 
-void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image) 
+void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, config conf) 
 {
 
-	short new_width = 200;
-	short new_height = 200;
 	cv::Mat resized_image;
-	cv::resize(image, resized_image, cv::Size(new_width, new_height));
-
+	cv::resize(image, resized_image, cv::Size(conf.width, conf.height));
 
 	std::ofstream file("image.txt");
-
 
 	for (int y = 0; y < resized_image.rows; y++) {
 		for (int x = 0; x < resized_image.cols; x++) {
@@ -40,8 +36,8 @@ void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image)
 			ASCIIConverter.setRed(bgrPixel[2]);
 
 			ASCIIConverter.getBrightness();
-			file << ASCIIConverter.BrightnessToASCIISymbol();
-			std::cout << printASCIISymbols(ASCIIConverter);
+			file << ASCIIConverter.BrightnessToASCIISymbol(conf);
+			std::cout << printASCIISymbols(ASCIIConverter, conf);
 		}
 		file << std::endl;
 		std::cout << std::endl;

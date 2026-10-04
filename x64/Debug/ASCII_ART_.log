@@ -1,4 +1,7 @@
-﻿  ASCII_ART_.cpp
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(538,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ASCII_ART_.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ASCIIConverter.cpp
+  main.cpp
   Renderer.cpp
   Generating Code...
-  ASCII_ART_.vcxproj -> C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\x64\Debug\ASCII_ART_.exe
+C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\ASCII_ART_\Renderer.cpp(19,1): warning C4715: 'Renderer::printASCIISymbols': not all control paths return a value
+  ASCII_ART_.vcxproj -> C:\Users\PC\Downloads\prjectOpenCV\ASCII_ART_\x64\Debug\Image2ASCII.exe

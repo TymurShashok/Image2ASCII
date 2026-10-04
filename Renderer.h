@@ -2,13 +2,12 @@
 #include <string>
 #include "ASCIIConverter.h"
 #include <opencv2/opencv.hpp>
-
-enum color { BlackWhite, RGB };
+#include "Config.h"
 
 class Renderer {
-	color colorMode = BlackWhite; // BlackWhite or RGB
+
 public:
-	std::string printASCIISymbols(ASCIIConverter ASCIIConverter);
-	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image);
+	std::string printASCIISymbols(ASCIIConverter ASCIIConverter, config conf);
+	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, config conf);
 
 };
