@@ -1,0 +1,29 @@
+name: Build Image2ASCII
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  SOLUTION_FILE_PATH: Image2ASCII.sln
+  BUILD_CONFIGURATION: Release
+  PLATFORM: x64
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build
+      run: msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=${{ env.PLATFORM }}
