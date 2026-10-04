@@ -7,9 +7,10 @@ on:
     branches: [ "main" ]
 
 env:
-  SOLUTION_FILE_PATH: Image2ASCII.sln
+  PROJECT_FILE_PATH: Image2ASCII/Image2ASCII.vcxproj
   BUILD_CONFIGURATION: Release
   PLATFORM: x64
+  OPENCV_DIR: C:\opencv
 
 permissions:
   contents: read
@@ -25,5 +26,26 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    - name: Download OpenCV
+      shell: powershell
+      run: |
+        Invoke-WebRequest `
+          -Uri "https://github.com/opencv/opencv/releases/download/5.0.0/opencv-5.0.0-windows.exe" `
+          -OutFile "$env:RUNNER_TEMP\opencv.exe"
+
+    - name: Install OpenCV
+      shell: powershell
+      run: |
+        Start-Process `
+          -FilePath "$env:RUNNER_TEMP\opencv.exe" `
+          -ArgumentList "-y", "-oC:\" `
+          -Wait
+
     - name: Build
-      run: msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=${{ env.PLATFORM }}
+      shell: powershell
+      run: |
+        msbuild "${{ env.PROJECT_FILE_PATH }}" `
+          /m `
+          /p:Configuration="${{ env.BUILD_CONFIGURATION }}" `
+          /p:Platform="${{ env.PLATFORM }}" `
+          /p:OPENCV_DIR="${{ env.OPENCV_DIR }}"
