@@ -1,13 +1,14 @@
 #include "ASCIIConverter.h"
 #include "Config.h"
 
-char ASCIIConverter::BrightnessToASCIISymbol(config conf) {
+char ASCIIConverter::BrightnessToASCIISymbol(const config& conf) 
+{
 
 	const char* smallSymbols = "@#*+=-:. ";
 	const char* mediumSymbols = "@#W$9876543210?!;:=-,._ ";
 	const char* largeSymbols = "@$#WmaOzAdzcfvxrjft/|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
 
-	int activeLength = 0;
+	short activeLength = 0;
 	const char* activeASCIISymbols;
 	switch (conf.symbols) {
 	case Small:

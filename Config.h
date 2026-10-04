@@ -1,22 +1,22 @@
 #pragma once
 #include <string>
-#include <iomanip>
-#include <iostream>
 
 enum color { BlackWhite, RGB };
-enum Symbols { Small, Medium, Large }; 
+enum Symbols { Small, Medium, Large };
 
-struct config {
-
+struct config
+{
 	std::string fileName = "image.jpg"; // Name of Image for ASCII transformation
 
 	Symbols symbols = Medium; // How Many Symbols in ASCII Image
 	color colorMode = RGB; // Color of ASCII Image
 
-	short width = 40; // Result Width
-	short height = 40; // Result Height
+	short width = 100; // Result Width
+	short height = 100; // Result Height
+	config() { fileName = "friren.jpg"; symbols = Medium; colorMode = RGB; width = 200; height = 200; } // Default 
 
-	config(int argc, char* argv[]) {
+	config(int argc, char* argv[]) { // Working Programm
+
 		if (argv[1]) {
 			fileName = argv[1];
 		}
@@ -39,27 +39,3 @@ struct config {
 		}
 	}
 };
-
-	/*void inputConfig() { 
-		std::cin >> fileName;
-		int symb;
-		std::cin >> symb;
-
-		switch (symb) {
-		case 0: symbols = smallSymb; break;
-		case 1: symbols = mediumSymb; break;
-		case 2: symbols = largeSymb; break;
-		default: symbols = mediumSymb; break;
-		}
-
-		int clrMode;
-		std::cin >> clrMode;
-
-		switch (clrMode) {
-		case 0: colorMode = BlackWhite; break;
-		case 1: colorMode = RGB; break;
-		default: colorMode = RGB; break;
-		}
-
-		std::cin >> width >> height;
-	}*/

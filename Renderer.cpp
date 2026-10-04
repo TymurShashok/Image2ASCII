@@ -6,19 +6,30 @@
 #include "Pixel.h"
 #include "ASCIIConverter.h"
 
+void Renderer::enableANSIColors()
+{
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter, config conf)
+	DWORD mode = 0;
+	GetConsoleMode(hOut, &mode);
+
+	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+
+	SetConsoleMode(hOut, mode);
+}
+
+std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf)
 {
 	if (conf.colorMode == RGB) {
 		return "\33[38;2;" + std::to_string((int)ASCIIConverter.getRed()) + ";" + std::to_string((int)ASCIIConverter.getGreen()) +
 			";" + std::to_string((int)ASCIIConverter.getBlue()) + "m" + std::string(1, ASCIIConverter.BrightnessToASCIISymbol(conf)) + "\033[0m";
 	}
-	else{
+	else {
 		return std::string(1, ASCIIConverter.BrightnessToASCIISymbol(conf));
 	}
 }
 
-void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, config conf) 
+void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,const config& conf)
 {
 
 	cv::Mat resized_image;
@@ -34,6 +45,7 @@ void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, co
 			ASCIIConverter.setBlue(bgrPixel[0]);
 			ASCIIConverter.setGreen(bgrPixel[1]);
 			ASCIIConverter.setRed(bgrPixel[2]);
+
 
 			ASCIIConverter.getBrightness();
 			file << ASCIIConverter.BrightnessToASCIISymbol(conf);
