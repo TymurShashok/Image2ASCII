@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_FILE_PATH: Image2ASCII/Image2ASCII.vcxproj
+  PROJECT_FILE_PATH: Image2ASCII.vcxproj
   BUILD_CONFIGURATION: Release
   PLATFORM: x64
   OPENCV_DIR: C:\opencv
