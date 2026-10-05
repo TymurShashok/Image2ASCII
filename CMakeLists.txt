@@ -24,3 +24,13 @@ target_include_directories(Image2ASCII PRIVATE
 target_link_libraries(Image2ASCII PRIVATE
     ${OpenCV_LIBS}
 )
+
+
+if(WIN32)
+    add_custom_command(TARGET Image2ASCII POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_RUNTIME_DLLS:Image2ASCII>
+        $<TARGET_FILE_DIR:Image2ASCII>
+        COMMAND_EXPAND_LISTS
+    )
+endif()

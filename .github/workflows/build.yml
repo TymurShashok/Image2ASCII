@@ -1,54 +1,40 @@
-name: CMake Build & Release
+name: CMake Build
 
 on:
   push:
-    branches: [ "main", "master" ]
-    tags:
-      - 'v*'
+    branches: ["main", "master"]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-windows:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Install OpenCV via vcpkg (Static)
-      run: |
-        vcpkg install opencv4[core,jpeg,png]:x64-windows-static
+      - name: Install OpenCV via vcpkg
+        run: |
+          vcpkg install opencv4[core,jpeg,png]:x64-windows
 
-    - name: Configure CMake
-      shell: powershell
-      run: |
-        cmake -B build -S . `
-          -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
-          -DVCPKG_TARGET_TRIPLET=x64-windows-static `
-          -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded$<$<CONFIG:Debug>:Debug>"
+      - name: Configure CMake
+        shell: powershell
+        run: |
+          cmake -B build -S . `
+            -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
+            -DVCPKG_TARGET_TRIPLET=x64-windows `
+            -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded$<$<CONFIG:Debug>:Debug>"
 
-    
-    - name: Build Project
-      run: |
-        cmake --build build --config Release
+      - name: Build Project
+        run: |
+          cmake --build build --config Release
 
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Image2ASCII-windows-exe
-        path: build/Release/Image2ASCII.exe
-
-    - name: Create GitHub Release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v2
-      with:
-        files: build/Release/Image2ASCII.exe
-        name: Release ${{ github.ref_name }}
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image2ASCII-windows-x64
+          path: build/Release/
