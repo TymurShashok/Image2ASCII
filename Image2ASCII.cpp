@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
 	if (argc >= 8) {
 		cv::Mat resized_image;
-		cv::resize(image, resized_image, cv::Size(conf.width, conf.height/2));
+		cv::resize(image, resized_image, cv::Size(conf.width, conf.height));
 		render.renderASCIIImage(converter, resized_image, conf); // Making full Image
 	}
 
