@@ -34,16 +34,12 @@ int main(int argc, char* argv[])
 		exit(0);
 	}
 
-	if (argc >= 8) {
-		cv::Mat resized_image;
-		cv::resize(image, resized_image, cv::Size(conf.width, conf.height));
-		render.renderASCIIImage(converter, resized_image, conf); // Making full Image
-	}
 
-	if (argc < 8) {
+	if (argc >= 8) {
+		conf.hasCustomSize = true;
+	}
 		render.renderASCIIImage(converter, image, conf); // Making full Image
 
-	}
 
 	std::cout << "\nPress Enter to exit...";
 	std::cin.get();
