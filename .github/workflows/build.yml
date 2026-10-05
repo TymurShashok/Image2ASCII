@@ -1,51 +1,51 @@
-name: Build Image2ASCII
+name: CMake Build & Release
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
-env:
-  PROJECT_FILE_PATH: Image2ASCII.vcxproj
-  BUILD_CONFIGURATION: Release
-  PLATFORM: x64
-  OPENCV_DIR: C:\opencv
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ "main", "master" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Download OpenCV
-      shell: powershell
+    - name: Install OpenCV via vcpkg
       run: |
-        Invoke-WebRequest `
-          -Uri "https://github.com/opencv/opencv/releases/download/5.0.0/opencv-5.0.0-windows.exe" `
-          -OutFile "$env:RUNNER_TEMP\opencv.exe"
+        vcpkg install opencv4[core,jpeg,png]:x64-windows
 
-    - name: Install OpenCV
-      shell: powershell
+    - name: Configure CMake
       run: |
-        Start-Process `
-          -FilePath "$env:RUNNER_TEMP\opencv.exe" `
-          -ArgumentList "-y", "-oC:\" `
-          -Wait
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
 
-    - name: Build
-      shell: powershell
+    - name: Build Project
       run: |
-        msbuild "${{ env.PROJECT_FILE_PATH }}" `
-          /m `
-          /p:Configuration="${{ env.BUILD_CONFIGURATION }}" `
-          /p:Platform="${{ env.PLATFORM }}" `
-          /p:OPENCV_DIR="${{ env.OPENCV_DIR }}"
+        cmake --build build --config Release
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Image2ASCII-windows-exe
+        path: build/Release/Image2ASCII.exe
+
+ 
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: build/Release/Image2ASCII.exe
+        name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
