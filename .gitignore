@@ -1,0 +1,25 @@
+# Сборка CMake (временные файлы и готовые бинарники)
+/out/
+/build/
+.cmake/
+CMakeCache.txt
+CMakeFiles/
+CMakeSettings.json
+
+# Временные файлы Visual Studio (если открываешь проект там)
+.vs/
+*.user
+*.suo
+*.db
+*.opendb
+
+# Локальные файлы конфигурации и логи
+*.log
+image.txt
+
+# Скомпилированные файлы (на случай, если собираешь руками в консоли)
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.lk

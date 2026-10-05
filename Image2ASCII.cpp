@@ -4,8 +4,8 @@
 #include "Config.h"
 
 /*@project Image2ASCII
-* @version v1.0.3
-* @date 04.10.2026
+* @version v1.0.5
+* @date 05.10.2026
 * @author Timur Shashok
 * @link https://github.com/TymurShashok/Image2ASCII
 * @acknowledgments Thank you for supporting this open-source initiative!
@@ -34,10 +34,20 @@ int main(int argc, char* argv[])
 		exit(0);
 	}
 
-	render.renderASCIIImage(converter, image, conf); // Making full Image
+	if (argc >= 8) {
+		cv::Mat resized_image;
+		cv::resize(image, resized_image, cv::Size(conf.width, conf.height/2));
+		render.renderASCIIImage(converter, resized_image, conf); // Making full Image
+	}
+
+	if (argc < 8) {
+		render.renderASCIIImage(converter, image, conf); // Making full Image
+
+	}
 
 	std::cout << "\nPress Enter to exit...";
 	std::cin.get();
 
 	return 0;
+
 }

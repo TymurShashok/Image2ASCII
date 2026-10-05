@@ -31,16 +31,12 @@ std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter,const conf
 
 void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,const config& conf)
 {
-
-	cv::Mat resized_image;
-	cv::resize(image, resized_image, cv::Size(conf.width, conf.height));
-
 	std::ofstream file("image.txt");
 
-	for (int y = 0; y < resized_image.rows; y++) {
-		for (int x = 0; x < resized_image.cols; x++) {
+	for (int y = 0; y < image.rows; y+= 2) {
+		for (int x = 0; x < image.cols; x++) {
 
-			cv::Vec3b bgrPixel = resized_image.at<cv::Vec3b>(y, x);
+			cv::Vec3b bgrPixel = image.at<cv::Vec3b>(y, x);
 
 			ASCIIConverter.setBlue(bgrPixel[0]);
 			ASCIIConverter.setGreen(bgrPixel[1]);

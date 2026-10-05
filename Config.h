@@ -13,29 +13,44 @@ struct config
 
 	short width = 100; // Result Width
 	short height = 100; // Result Height
-	config() { fileName = "image.jpg"; symbols = Medium; colorMode = RGB; width = 200; height = 200; } // Default 
+	config() { fileName = "image.jpg"; symbols = Medium; colorMode = RGB; width; height; } // Default 
 
 	config(int argc, char* argv[]) { // Working Programm
 
 		if (argv[1]) {
-			fileName = argv[1];
-		}
+			fileName = std::string(argv[1]);
 
-		if (std::string(argv[2]) == "Small" || std::string(argv[2]) == "small") { symbols = Small; }
-		else if (std::string(argv[2]) == "Medium" || std::string(argv[2]) == "medium") { symbols = Medium; }
-		else { symbols = Large; }
+			for (int i = 0; i < argc; i++) {
 
-		if (std::string(argv[3]) == "Color" || std::string(argv[3]) == "color") {
-			colorMode = RGB;
-		}
-		else {
-			colorMode = BlackWhite;
-		}
-		if (argv[4]) {
-			width = std::stoi(argv[4]);
-		}
-		if (argv[5]) {
-			height = std::stoi(argv[5]);
+				if (std::string(argv[i]) == "--symbols") {
+					if (std::string(argv[i + 1]) == "Small" || std::string(argv[i + 1]) == "small") { symbols = Small; }
+					else if (std::string(argv[i + 1]) == "Medium" || std::string(argv[i + 1]) == "medium") { symbols = Medium; }
+					else if (std::string(argv[i + 1]) == "Large" || std::string(argv[i + 1]) == "large") { symbols = Large; }
+				}
+
+				if (std::string(argv[i]) == "--color") {
+					if (std::string(argv[i + 1]) == "RGB" || std::string(argv[i + 1]) == "rgb") {
+						colorMode = RGB;
+					}
+					else if (std::string(argv[i + 1]) == "BW" || std::string(argv[i + 1]) == "BW") {
+						colorMode = BlackWhite;
+					}
+				}
+
+				if (std::string(argv[i]) == "--original") { // without Resizing;
+					return;
+				}
+				if (std::string(argv[i]) == "--width") {
+					if (argv[i + 1]) {
+						width = std::stoi(argv[i + 1]);
+					}
+				}
+				if (std::string(argv[i]) == "--height") {
+					if (argv[i + 1]) {
+						height = std::stoi(argv[i + 1]);
+					}
+				}
+			}
 		}
 	}
 };
