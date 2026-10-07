@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 enum color { BlackWhite, RGB };
 enum Symbols { Small, Medium, Large };
@@ -55,4 +56,32 @@ struct config
 			}
 		}
 	}
+
+	void ConfigInput(std::string text,std::string text2) {
+
+		if (text == "--filename") {
+			fileName = text2;
+		}
+		if (text == "--symbols") {
+			if (text2 == "small") { symbols = Small;}
+			if (text2 == "medium") {symbols = Medium;}
+			else { symbols = Large;}
+		}
+		if (text == "--color") {
+			if (text2 == "rgb") { colorMode = RGB; }
+			if (text2 == "blackwhite") { colorMode = BlackWhite; }
+		}
+		if (text == "--width") {
+			width = std::stoi(text2);
+			hasCustomSize = true;
+		}
+		if (text == "--height") {
+			height = std::stoi(text2);
+			hasCustomSize = true;
+		}
+		if (text == "--original") {
+			hasCustomSize = false;
+		}
+	}
+
 };

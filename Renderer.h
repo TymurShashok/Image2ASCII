@@ -13,6 +13,7 @@ class Renderer
 
 public:
 	void enableANSIColors(); // Enabling a ANSI colors for Terminal
+	void PrintTab();
 	std::string printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf); 
 	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,const config& conf);
 

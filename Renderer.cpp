@@ -17,6 +17,20 @@ void Renderer::enableANSIColors()
 
 	SetConsoleMode(hOut, mode);
 }
+void Renderer::PrintTab() {
+	config conf;
+	ASCIIConverter converter;
+	conf.colorMode = BlackWhite;
+	conf.fileName = "Image2ASCII_Tab.jpg";
+	conf.symbols = Large;
+	conf.width = 100;
+	conf.height = 100;
+
+	cv::Mat image = cv::imread(conf.fileName, cv::IMREAD_COLOR);
+
+	renderASCIIImage(converter, image, conf);
+}
+
 
 std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf)
 {
