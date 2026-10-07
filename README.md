@@ -12,7 +12,7 @@ Image2ASCII supports **RGB ANSI colors**, multiple ASCII character sets, configu
 
 ## Preview
 
-![Image2ASCII](Image2ASCII_Tab.jpg)
+![Image2ASCII](Image2ASCIIPrewiew.jpg)
 
 ## Features
 
