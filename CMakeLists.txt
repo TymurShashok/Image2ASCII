@@ -15,6 +15,8 @@ add_executable(Image2ASCII
     Renderer.h
     Config.h
     Pixel.h
+    app.rc
+    app.ico
 )
 
 target_include_directories(Image2ASCII PRIVATE
