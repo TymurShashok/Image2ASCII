@@ -2,131 +2,242 @@
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/TymurShashok/Image2ASCII/actions)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen)](https://github.com/TymurShashok/Image2ASCII/blob/main/LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.6-blue)](https://github.com/TymurShashok/Image2ASCII)
+[![Release](https://img.shields.io/badge/Release-v1.0.7-blue)](https://github.com/TymurShashok/Image2ASCII/releases)
 
-A small C++ console application that converts an image into ASCII art. Each pixel is mapped to a character based on its brightness, and the result is printed to the console (optionally in full 24-bit color) and saved to a text file.
+A lightweight C++ console application that converts images into ASCII art.
 
-> Note: Image2ASCII is tested only on Windows 10 x64.
+Image2ASCII supports **RGB ANSI colors**, multiple ASCII character sets, configurable output size, and two CLI modes: a classic command-line mode and an interactive terminal interface.
+
+> **Platform:** Windows x64
+
+## Preview
+
+![Image2ASCII](Image2ASCII_Tab.jpg)
 
 ## Features
 
-- Converts any image supported by OpenCV (JPG, PNG, BMP, ...) into ASCII art
-- **Command-line interface**: choose the input file, character set, color mode and output size without recompiling
-- **Three character sets** to control level of detail: small, medium and large
-- **Two color modes**: plain black & white, or true-color (RGB) output using ANSI escape codes
-- **Aspect-ratio compensation**: every second pixel row is skipped, because characters are about twice as tall as they are wide
-- Brightness calculated with the standard luminance formula (`0.299·R + 0.587·G + 0.114·B`)
-- Saves the plain-text result to `image.txt` alongside printing it in the console
-- **CMake build** (CMake 3.16+, C++17); OpenCV DLLs are copied next to the executable automatically on Windows
+* Converts images supported by OpenCV (JPG, PNG, BMP, ...)
+* **Two CLI modes**
 
-## Usage
+  * **CLI 1:** pass arguments directly from Command Prompt / PowerShell
+  * **CLI 2:** launch the executable without arguments and configure it interactively
+* **RGB 24-bit color** output using ANSI escape sequences
+* Black & white ASCII output
+* **Three character sets:** Small, Medium and Large
+* Configurable output width and height
+* Original image size mode
+* Brightness-based ASCII conversion
+* Saves the generated ASCII art to `image.txt`
+* CMake build with automatic OpenCV DLL copying on Windows
+* Windows executable icon
 
+## CLI 1 — Command Line
+
+Run Image2ASCII with arguments:
+
+```bash
+Image2ASCII.exe <image> [options]
 ```
-Image2ASCII <image> [--symbols small|medium|large] [--color rgb|bw] [--width N] [--height N] [--original]
+
+Example:
+
+```bash
+Image2ASCII.exe photo.jpg --symbols large --color rgb --width 120 --height 60
 ```
 
-The first argument is always the image path. Options can follow in any order.
+### Options
 
-| Option                              | Description                                                  | Default  |
-|-------------------------------------|--------------------------------------------------------------|----------|
-| `<image>`                           | Path to the input image (first argument)                     | `image.jpg` (when run with no arguments) |
-| `--symbols small\|medium\|large`    | Character set used for the output                            | `medium` |
-| `--color rgb\|bw`                   | `rgb` = 24-bit color, `bw` = plain text (`BW` also accepted) | `rgb`    |
-| `--width N`                         | Target width in pixels (= characters per line)               | `100`    |
-| `--height N`                        | Target height in pixels before row skipping                  | `100`    |
-| `--original`                        | Keep the original image size (no resizing)                   | off      |
+| Option                           | Description                    | Default     |
+| -------------------------------- | ------------------------------ | ----------- |
+| `<image>`                        | Path to the input image        | `image.jpg` |
+| `--symbols small\|medium\|large` | Select the ASCII character set | `medium`    |
+| `--color rgb\|bw`                | RGB or black & white output    | `rgb`       |
+| `--width N`                      | Output width                   | `100`       |
+| `--height N`                     | Output height                  | `100`       |
+| `--original`                     | Use the original image size    | off         |
 
 ### Examples
 
+Default configuration:
+
 ```bash
-# Defaults: looks for image.jpg, medium symbols, RGB color
-Image2ASCII
-
-# Large character set, black & white
-Image2ASCII photo.png --symbols large --color bw
-
-# Resize to a given size (see the note on resizing below)
-Image2ASCII photo.png --symbols small --color rgb --width 120 --height 60
+Image2ASCII.exe image.jpg
 ```
 
-> **Resizing note:** the image is currently resized only when the program receives at least 8 command-line arguments (including the program name), i.e. when `--width` and `--height` are passed together with at least one more option. Otherwise the original image size is used. See [Known limitations](#known-limitations).
+Large ASCII characters in black & white:
 
-## How it works
+```bash
+Image2ASCII.exe photo.png --symbols large --color bw
+```
 
-1. The image is loaded with OpenCV (`IMREAD_COLOR`) and, if requested, resized to the given width and height.
-2. The image is scanned row by row, skipping every second row to compensate for the height of characters.
-3. For every pixel, the RGB values are read and the brightness (0–255) is computed.
-4. The brightness is mapped to an index in the active character set, from dark characters (`@`, `#`) to light ones (`.`, space).
-5. The character is printed to the console (colored with the pixel's RGB value in RGB mode) and written to `image.txt` (always without color).
+Custom output size:
 
-### Character sets
+```bash
+Image2ASCII.exe photo.png --symbols small --color rgb --width 120 --height 60
+```
 
-| Mode     | Characters                                                                |
-|----------|---------------------------------------------------------------------------|
-| `small`  | `@#*+=-:. `                                                               |
-| `medium` | `@#W$9876543210?!;:=-,._ ` *(default)*                                    |
-| `large`  | `@$#WmaOzAdzcfvxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`'. `                       |
+## CLI 2 — Interactive Mode
 
-## Project structure
+You can also simply launch:
 
-| File                    | Purpose                                                                          |
-|-------------------------|----------------------------------------------------------------------------------|
-| `Image2ASCII.cpp`       | Entry point: parses arguments, loads the image and starts rendering              |
-| `Config.h`              | `config` struct: defaults and command-line argument parsing                      |
-| `ASCIIConverter.h/.cpp` | Maps a pixel's brightness to an ASCII character for the selected symbol set      |
-| `Pixel.h`               | `PIXEL` class storing R, G, B and computing brightness                           |
-| `Renderer.h/.cpp`       | Loops over pixels, prints to console (with ANSI colors) and writes `image.txt`   |
-| `CMakeLists.txt`        | CMake build configuration                                                        |
-| `.github/workflows/`    | GitHub Actions workflow (build badge)                                            |
+```bash
+Image2ASCII.exe
+```
+
+Image2ASCII will open its interactive configuration interface.
+
+Available commands:
+
+| Command              | Description                  |
+| -------------------- | ---------------------------- |
+| `--filename <path>`  | Select the input image       |
+| `--symbols small`    | Use the Small character set  |
+| `--symbols medium`   | Use the Medium character set |
+| `--symbols large`    | Use the Large character set  |
+| `--color rgb`        | Enable RGB output            |
+| `--color blackwhite` | Use black & white output     |
+| `--width <N>`        | Set output width             |
+| `--height <N>`       | Set output height            |
+| `--original`         | Use the original image size  |
+| `--start`            | Start conversion             |
+| `--exit`             | Exit the application         |
+
+Example:
+
+```text
+> --filename photo.jpg
+> --symbols large
+> --color rgb
+> --width 120
+> --height 60
+> --start
+```
+
+After rendering, the application can be configured again without restarting the executable.
+
+## Character Sets
+
+| Mode       | Character set              |                              |
+| ---------- | -------------------------- | ---------------------------- |
+| **Small**  | `@#*+=-:. `                |                              |
+| **Medium** | `@#W$9876543210?!;:=-,._ ` |                              |
+| **Large**  | `@$#WmaOzAdzcfvxrjft/      | ()1{}[]?-_+~<>i!lI;:,"^`'. ` |
+
+Characters are ordered from **darkest** to **lightest**.
+
+## How It Works
+
+1. OpenCV loads the image in BGR format.
+2. Image2ASCII optionally resizes the image according to the selected configuration.
+3. Every pixel is converted into RGB values.
+4. Pixel brightness is calculated.
+5. Brightness is mapped to a character from the selected ASCII set.
+6. In RGB mode, the character is printed using its original pixel color.
+7. The result is written to `image.txt` without ANSI color codes.
+
+The conversion uses a brightness value based on the pixel's RGB components.
+
+## Output Size
+
+Characters are taller than they are wide, so the renderer compensates for terminal character proportions by using half the requested image height for the ASCII output.
+
+For example:
+
+```text
+--width 120 --height 60
+```
+
+produces an ASCII image with approximately:
+
+```text
+120 characters wide
+30 text lines high
+```
+
+## Project Structure
+
+| File                    | Purpose                                             |
+| ----------------------- | --------------------------------------------------- |
+| `Image2ASCII.cpp`       | Application entry point and CLI mode selection      |
+| `Config.h`              | Configuration and command-line parsing              |
+| `ASCIIConverter.h/.cpp` | Pixel brightness → ASCII conversion                 |
+| `Pixel.h`               | RGB pixel representation and brightness calculation |
+| `Renderer.h/.cpp`       | ASCII rendering, ANSI colors and file output        |
+| `CMakeLists.txt`        | CMake build configuration                           |
+| `.github/workflows/`    | GitHub Actions CI / release workflows               |
+| `Image2ASCII_Tab.jpg`   | Image used by the interactive interface             |
+| `app.ico`               | Windows application icon                            |
+| `app.rc`                | Windows resource configuration                      |
 
 ## Requirements
 
-- **Windows** (the renderer includes `<windows.h>`)
-- **CMake 3.16+** and a C++17 compiler (Visual Studio 2022 / MSVC recommended)
-- **OpenCV** (the author builds against OpenCV 5.0, `opencv_world500`)
-- A terminal that supports 24-bit ANSI colors, such as Windows Terminal, for RGB mode
+* **Windows 10/11 x64**
+* **C++17**
+* **CMake 3.16+**
+* A C++17-compatible compiler
+* **OpenCV**
+* A terminal with ANSI / virtual terminal color support for RGB mode
 
-## Getting started
+Visual Studio 2022 with MSVC is recommended.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/TymurShashok/Image2ASCII.git
-   cd Image2ASCII
-   ```
-2. **Install OpenCV** and note the folder where it is extracted.
-3. **Set the OpenCV path** in `CMakeLists.txt`. The file currently contains an absolute path from the author's machine, so change this line to match yours:
-   ```cmake
-   set(OpenCV_DIR "<opencv>/build/x64/vc16/lib")
-   ```
-4. **Configure and build**
-   ```bash
-   cmake -S . -B build
-   cmake --build build --config Release
-   ```
-   Alternatively, open the project folder in Visual Studio 2022, which supports CMake projects directly.
-5. **Run it.** On Windows the required OpenCV DLLs are copied next to the executable after the build.
-   ```bash
-   build\Release\Image2ASCII.exe image.jpg --symbols medium --color rgb
-   ```
-   The ASCII art appears in the console and is saved as `image.txt`.
+## Build
 
-> Tip: reduce the console font size or zoom out so wide output fits on one line.
+Clone the repository:
 
-## Known limitations
+```bash
+git clone https://github.com/TymurShashok/Image2ASCII.git
+cd Image2ASCII
+```
 
-- The image is resized only when at least 8 arguments are passed; `--original` does not currently change this behavior
-- `--width` and `--height` are not validated (invalid or missing values are not reported)
-- `--height` is applied before every second row is skipped, so the number of text lines is smaller than the value you pass
-- The OpenCV path in `CMakeLists.txt` is hard-coded and must be edited manually
-- Windows-only (`<windows.h>` is used to enable ANSI colors)
+Configure and build with CMake:
 
-## Roadmap ideas
+```bash
+cmake -S . -B build
+cmake --build build --config Release
+```
 
-- Reliable resizing logic and argument validation
-- Preserve the aspect ratio automatically when only one of width/height is given
-- Cross-platform support (remove the `<windows.h>` dependency, find OpenCV without a hard-coded path)
-- Export colored output to HTML or an image
+On Windows, the required OpenCV runtime DLLs are copied next to the executable after the build.
+
+Run:
+
+```bash
+build\Release\Image2ASCII.exe
+```
+
+Or use CLI 1:
+
+```bash
+build\Release\Image2ASCII.exe photo.jpg --symbols medium --color rgb
+```
+
+## Release
+
+The latest version is **v1.0.7**.
+
+Recent updates include:
+
+* Added an interactive CLI mode
+* Added CLI mode selection depending on how the application is launched
+* Added an Image2ASCII interface tab
+* Improved output-size handling
+* Fixed height/resizing issues
+* Added a Windows application icon
+* General quality-of-life improvements and bug fixes
+
+## Known Limitations
+
+* Windows only
+* RGB mode requires terminal ANSI color support
+* Command-line argument validation is still limited
+* The current CLI parser expects option values after their corresponding flags
+* Output dimensions are affected by terminal character proportions
 
 ## Author
 
-[Tymur Shashok](https://github.com/TymurShashok)
+**[Tymur Shashok](https://github.com/TymurShashok)**
+
+GitHub: https://github.com/TymurShashok/Image2ASCII
+
+---
+
+If you find a bug or have an idea, feel free to open an issue.
