@@ -10,8 +10,6 @@ Image2ASCII supports **RGB ANSI colors**, multiple ASCII character sets, configu
 
 > **Platform:** Windows x64
 
-## Preview
-
 ![Image2ASCII](Image2ASCIIPrewiew.jpg)
 
 ## Features

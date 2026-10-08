@@ -8,13 +8,15 @@
 * @brief system a responsibile for print ASCII;
 */
 
-class Renderer 
+class Renderer
 {
 
 public:
 	void enableANSIColors(); // Enabling a ANSI colors for Terminal
+	void printError(config& conf);
+	void printHelpMenu();
 	void PrintTab();
-	std::string printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf); 
-	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,const config& conf);
+	std::string printASCIISymbols(ASCIIConverter ASCIIConverter, const config& conf);
+	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, const config& conf);
 
 };

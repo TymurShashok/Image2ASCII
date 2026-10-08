@@ -17,6 +17,30 @@ void Renderer::enableANSIColors()
 
 	SetConsoleMode(hOut, mode);
 }
+
+void Renderer::printError(config& conf)
+{
+	if (conf.hasFileName == false) {
+		std::cout << "* Wrong file name or path" << std::endl;
+	}
+}
+
+void Renderer::printHelpMenu()
+{
+	std::cout << "========================HELP========================" << std::endl;;
+	std::cout << "--filename <Name.type or Path>" << std::endl;
+	std::cout << "--symbols <Small/Medium/Large> - out symbols format" << std::endl;
+	std::cout << "--color <rgb/wb> - out color format" << std::endl;
+	std::cout << "--width <cols> - out width" << std::endl;
+	std::cout << "--height <rows> - out height" << std::endl;
+	std::cout << "--start - starting programm" << std::endl;
+	std::cout << "--exit - leave" << std::endl;
+
+	system("pause");
+	system("cls");
+	PrintTab();
+}
+
 void Renderer::PrintTab() {
 	config conf;
 	ASCIIConverter converter;
@@ -31,8 +55,7 @@ void Renderer::PrintTab() {
 	renderASCIIImage(converter, image, conf);
 }
 
-
-std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter,const config& conf)
+std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter, const config& conf)
 {
 	if (conf.colorMode == RGB) {
 		return "\33[38;2;" + std::to_string((int)ASCIIConverter.getRed()) + ";" + std::to_string((int)ASCIIConverter.getGreen()) +
@@ -43,15 +66,24 @@ std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter,const conf
 	}
 }
 
-void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,const config& conf)
+void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, const config& conf)
 {
+
+	if (image.empty()) { // if file not opening or empty
+		std::cout << "Can`t load a " << conf.fileName << std::endl;
+		return;
+	}
 	std::ofstream file("image.txt");
 	cv::Mat resizedImage;
 
 	int width;
 	int height;
 
-	if (conf.hasCustomSize) {
+	if (conf.hasCustomScale) {
+		width = conf.scale * image.cols;
+		height = (conf.scale * image.rows) / 2;
+	}
+	else if (conf.hasCustomSize) {
 		width = conf.width;
 		height = conf.height / 2;
 	}
@@ -62,6 +94,7 @@ void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,con
 
 
 	cv::resize(image, resizedImage, cv::Size(width, height));
+
 	for (int y = 0; y < resizedImage.rows; y++) {
 		for (int x = 0; x < resizedImage.cols; x++) {
 
@@ -72,7 +105,7 @@ void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image,con
 			ASCIIConverter.setRed(bgrPixel[2]);
 
 
-			ASCIIConverter.getBrightness(); 
+			ASCIIConverter.getBrightness();
 			file << ASCIIConverter.BrightnessToASCIISymbol(conf); // Save a ASCII Symbol in File.TXT
 			std::cout << printASCIISymbols(ASCIIConverter, conf); // Print a Symbol with using of Color-System 
 		}

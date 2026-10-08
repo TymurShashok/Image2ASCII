@@ -1,7 +1,7 @@
 #include "ASCIIConverter.h"
 #include "Config.h"
 
-char ASCIIConverter::BrightnessToASCIISymbol(const config& conf) 
+char ASCIIConverter::BrightnessToASCIISymbol(const config& conf)
 {
 	/**
 	* Combinations of ASCII Symbols.
@@ -11,12 +11,12 @@ char ASCIIConverter::BrightnessToASCIISymbol(const config& conf)
 	const char* mediumSymbols = "@#W$9876543210?!;:=-,._ "; // Medium combinations
 	const char* largeSymbols = "@$#WmaOzAdzcfvxrjft/|()1{}[]?-_+~<>i!lI;:,\"^`'. "; // Large combinations
 
-	short activeLength = 0; 
+	short activeLength = 0;
 	const char* activeASCIISymbols;
 	switch (conf.symbols) {
 	case Small:
 	{
-		activeASCIISymbols = smallSymbols; 
+		activeASCIISymbols = smallSymbols;
 		activeLength = 9; // Small length
 		break;
 	}
@@ -33,7 +33,7 @@ char ASCIIConverter::BrightnessToASCIISymbol(const config& conf)
 		break;
 	}
 	default: {
-		activeASCIISymbols = smallSymbols; 
+		activeASCIISymbols = smallSymbols;
 		activeLength = 9; // Default: Small length
 		break;
 	}
@@ -41,8 +41,8 @@ char ASCIIConverter::BrightnessToASCIISymbol(const config& conf)
 
 	/**
 	* @formula to find a index of Symbol: Brightness * (Length - 1) / MAX_BRIGHTNESS;
-  	*/
-	int index = (static_cast<int>(pixel.getBrightness()) * (activeLength - 1) / 255); 
+	*/
+	int index = (static_cast<int>(pixel.getBrightness()) * (activeLength - 1) / 255);
 
 	return activeASCIISymbols[index];
 }

@@ -29,6 +29,8 @@ public:
 	/**
 	* ------ setters -----
 	*/
+
+	
 	void setRed(unsigned char red) {
 		pixel.setRed(red);
 	}
