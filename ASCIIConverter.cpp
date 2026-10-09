@@ -11,7 +11,7 @@ char ASCIIConverter::BrightnessToASCIISymbol(const config& conf)
 	const char* mediumSymbols = "@#W$9876543210?!;:=-,._ "; // Medium combinations
 	const char* largeSymbols = "@$#WmaOzAdzcfvxrjft/|()1{}[]?-_+~<>i!lI;:,\"^`'. "; // Large combinations
 
-	short activeLength = 0;
+	uint8_t activeLength = 0;
 	const char* activeASCIISymbols;
 	switch (conf.symbols) {
 	case Small:

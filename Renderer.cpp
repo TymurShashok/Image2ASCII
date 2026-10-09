@@ -6,16 +6,18 @@
 #include "Pixel.h"
 #include "ASCIIConverter.h"
 
-void Renderer::enableANSIColors()
+void Renderer::enableANSIColors(const config& conf)
 {
-	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (conf.colorMode == RGB) {
+		HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	DWORD mode = 0;
-	GetConsoleMode(hOut, &mode);
+		DWORD mode = 0;
+		GetConsoleMode(hOut, &mode);
 
-	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+		mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
-	SetConsoleMode(hOut, mode);
+		SetConsoleMode(hOut, mode);
+	}
 }
 
 void Renderer::printError(config& conf)
@@ -73,6 +75,8 @@ void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, co
 		std::cout << "Can`t load a " << conf.fileName << std::endl;
 		return;
 	}
+
+	enableANSIColors(conf);
 	std::ofstream file("image.txt");
 	cv::Mat resizedImage;
 

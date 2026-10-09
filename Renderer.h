@@ -12,7 +12,7 @@ class Renderer
 {
 
 public:
-	void enableANSIColors(); // Enabling a ANSI colors for Terminal
+	void enableANSIColors(const config& conf); // Enabling a ANSI colors for Terminal
 	void printError(config& conf);
 	void printHelpMenu();
 	void PrintTab();

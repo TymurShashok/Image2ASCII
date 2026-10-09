@@ -1,8 +1,9 @@
 #pragma once
+
 #include <string>
 #include <iostream>
 
-enum color { BlackWhite, RGB };
+enum Color { BlackWhite, RGB };
 enum Symbols { Small, Medium, Large };
 
 struct config
@@ -10,7 +11,7 @@ struct config
 	std::string fileName = "image.jpg"; // Name of Image for ASCII transformation
 
 	Symbols symbols = Medium; // How Many Symbols in ASCII Image
-	color colorMode = RGB; // Color of ASCII Image
+	Color colorMode = RGB; // Color of ASCII Image
 
 	short width = 100; // Result Width
 	short height = 100; // Result Height
@@ -20,18 +21,27 @@ struct config
 	bool hasFileName = false;
 	bool hasCustomScale = false;
 	bool hasCustomSize = false;
-	config() { fileName = "image.jpg"; symbols = Medium; colorMode = RGB; width; height; } // Default 
+
+	config() = default;  // Default 
 
 	config(int argc, char* argv[]) { // Working Programm
+			
+	/*	if (argv[1] != "--exit" && argv[1] != "--filename" && argv[1] != "--symbols" && argv[1] != "--color" && argv[1] != "--original"
+			&& argv[1] != "--scale" && argv[1] != "--width" && argv[1] != "--height") {
+			std::cout << "Wrong Command: Use --help to information!" << std::endl;
+			exit(0);
+		}*/
 
-		if (argv[1] == "--exit") { exit(0); }
+			if (std::string(argv[1]) == "--exit") {
+				exit(0);
+			}
+
+		if (std::string(argv[1]) == "--filename") {
+			fileName = std::string(argv[2]);
+			hasFileName = true;
+		}
 
 		for (int i = 0; i < argc; i++) {
-
-			if (std::string(argv[i]) == "--filename") {
-				fileName = std::string(argv[i + 1]);
-				hasFileName = true;
-			}
 
 			if (std::string(argv[i]) == "--symbols") {
 				if (std::string(argv[i + 1]) == "Small" || std::string(argv[i + 1]) == "small") {
@@ -78,7 +88,7 @@ struct config
 		}
 	}
 
-	int checkSize(short size)
+	int checkSize(int size)
 	{
 		if (size < 100) {
 			return size = 100;
@@ -86,7 +96,7 @@ struct config
 		return size;
 	}
 
-	void ConfigInput(std::string text, std::string text2) {
+	void ConfigInput(const std::string& text, const std::string& text2) {
 
 		if (text == "--filename") {
 			fileName = text2;

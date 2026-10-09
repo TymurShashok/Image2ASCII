@@ -13,11 +13,13 @@ add_executable(Image2ASCII
     ASCIIConverter.h
     Renderer.cpp
     Renderer.h
+    Input.h
+    Input.cpp
     Config.h
     Pixel.h
     app.rc
     app.ico
-)
+ "Input.h")
 
 target_include_directories(Image2ASCII PRIVATE
     ${OpenCV_INCLUDE_DIRS}
