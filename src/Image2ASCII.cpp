@@ -19,11 +19,11 @@ int main(int argc, char* argv[])
 	/*std::string input;
 	std::string input2;*/
 	Input input;
-	config conf;
+	Config conf;
 	Renderer render; // for Rendering in console
 
 	if (argc > 1) { //If using ARG
-		conf = config(argc, argv);
+		conf = Config(argc, argv);
 		conf.usingARGV = true;
 	}
 
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 					if (input.getCommand() != "--start" && input.getCommand() != "--help" && input.getCommand() != "--original") {
 				/*		std::cin >> input2;*/
 					}
-					conf.ConfigInput(input.getCommand(), input.getValue());
+					conf.update(input.getCommand(), input.getValue());
 				}
 
 			} while (input.getCommand() != "--start");

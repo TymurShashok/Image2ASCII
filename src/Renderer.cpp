@@ -6,7 +6,7 @@
 #include "Pixel.h"
 #include "ASCIIConverter.h"
 
-void Renderer::enableANSIColors(const config& conf)
+void Renderer::enableANSIColors(const Config& conf)
 {
 	if (conf.colorMode == RGB) {
 		HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -20,7 +20,7 @@ void Renderer::enableANSIColors(const config& conf)
 	}
 }
 
-void Renderer::printError(config& conf)
+void Renderer::printError(const Config& conf)
 {
 	if (conf.hasFileName == false) {
 		std::cout << "* Wrong file name or path" << std::endl;
@@ -44,7 +44,8 @@ void Renderer::printHelpMenu()
 }
 
 void Renderer::PrintTab() {
-	config conf;
+
+	Config conf;
 	ASCIIConverter converter;
 	conf.colorMode = BlackWhite;
 	conf.fileName = "Image2ASCII_Tab.jpg";
@@ -57,7 +58,7 @@ void Renderer::PrintTab() {
 	renderASCIIImage(converter, image, conf);
 }
 
-std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter, const config& conf)
+std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter, const Config& conf)
 {
 	if (conf.colorMode == RGB) {
 		return "\33[38;2;" + std::to_string((int)ASCIIConverter.getRed()) + ";" + std::to_string((int)ASCIIConverter.getGreen()) +
@@ -68,7 +69,7 @@ std::string Renderer::printASCIISymbols(ASCIIConverter ASCIIConverter, const con
 	}
 }
 
-void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, const config& conf)
+void Renderer::renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, const Config& conf)
 {
 
 	if (image.empty()) { // if file not opening or empty

@@ -45,5 +45,5 @@ public:
 	* @brief Function for Converting brightness of Pixel to ASCII Symbol
 	* @return symbol ASCII, visual identical to brightness;
 	*/
-	char BrightnessToASCIISymbol(const config& conf);
+	char BrightnessToASCIISymbol(const Config& conf);
 };

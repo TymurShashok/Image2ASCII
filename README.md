@@ -6,7 +6,7 @@
 
 **Image2ASCII** is a Windows console application written in C++ that converts images into ASCII art. It supports RGB-colored and black-and-white output, three character sets, adjustable rendering settings, and an interactive terminal interface.
 
-![Image2ASCII preview](Image2ASCIIPrewiew.jpg)
+![Image2ASCII preview](resources/Image2ASCIIPrewiew.jpg)
 
 ## Features
 
@@ -136,7 +136,7 @@ If OpenCV is installed and discoverable by CMake:
 
 ```powershell
 cmake -S . -B build
-cmake --build build --config Release
+cmake --build build --Config Release
 ```
 
 The GitHub Actions workflow installs OpenCV using vcpkg and builds the Windows target. See [GitHub Actions](https://github.com/TymurShashok/Image2ASCII/actions) for build runs.

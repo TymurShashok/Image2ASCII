@@ -6,7 +6,7 @@
 enum Color { BlackWhite, RGB };
 enum Symbols { Small, Medium, Large };
 
-struct config
+struct Config
 {
 	std::string fileName = "image.jpg"; // Name of Image for ASCII transformation
 
@@ -22,19 +22,19 @@ struct config
 	bool hasCustomScale = false;
 	bool hasCustomSize = false;
 
-	config() = default;  // Default 
+	Config() = default;  // Default 
 
-	config(int argc, char* argv[]) { // Working Programm
-			
-	/*	if (argv[1] != "--exit" && argv[1] != "--filename" && argv[1] != "--symbols" && argv[1] != "--color" && argv[1] != "--original"
-			&& argv[1] != "--scale" && argv[1] != "--width" && argv[1] != "--height") {
-			std::cout << "Wrong Command: Use --help to information!" << std::endl;
-			exit(0);
-		}*/
+	Config(int argc, char* argv[]) { // Working Programm
 
-			if (std::string(argv[1]) == "--exit") {
+		/*	if (argv[1] != "--exit" && argv[1] != "--filename" && argv[1] != "--symbols" && argv[1] != "--color" && argv[1] != "--original"
+				&& argv[1] != "--scale" && argv[1] != "--width" && argv[1] != "--height") {
+				std::cout << "Wrong Command: Use --help to information!" << std::endl;
 				exit(0);
-			}
+			}*/
+
+		if (std::string(argv[1]) == "--exit") {
+			exit(0);
+		}
 
 		if (std::string(argv[1]) == "--filename") {
 			fileName = std::string(argv[2]);
@@ -70,21 +70,24 @@ struct config
 			if (std::string(argv[i]) == "--scale") {
 				if (argv[i + 1]) {
 					scale = std::stod(argv[i + 1]);
-					hasCustomSize = true;
+					hasCustomScale = true;
 				}
 			}
 			if (std::string(argv[i]) == "--width") {
 				if (argv[i + 1]) {
 					width = std::stoi(argv[i + 1]);
 					width = checkSize(width);
+					hasCustomSize = true;
 				}
 			}
 			if (std::string(argv[i]) == "--height") {
 				if (argv[i + 1]) {
 					height = std::stoi(argv[i + 1]);
 					height = checkSize(height);
+					hasCustomSize = true;
 				}
 			}
+
 		}
 	}
 
@@ -96,7 +99,7 @@ struct config
 		return size;
 	}
 
-	void ConfigInput(const std::string& text, const std::string& text2) {
+	void update(const std::string& text, const std::string& text2) {
 
 		if (text == "--filename") {
 			fileName = text2;
