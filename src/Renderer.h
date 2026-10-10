@@ -1,8 +1,9 @@
 #pragma once
-#include <string>
-#include "ASCIIConverter.h"
-#include <opencv2/opencv.hpp>
 #include "Config.h"
+#include "ASCIIConverter.h"
+
+#include <string>
+#include <opencv2/opencv.hpp>
 /**
 * @class Renderer
 * @brief system a responsibile for print ASCII;

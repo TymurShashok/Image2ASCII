@@ -1,6 +1,8 @@
 #pragma once
+
 #include "Pixel.h"
 #include "Config.h"
+
 /**
 *@Class ASCIIConverter 
 *@Brief For convert Pixel-Data to ASCII Symbols 

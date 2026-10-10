@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 #include "ASCIIConverter.h"
 #include "Config.h"
 #include "Input.h"
