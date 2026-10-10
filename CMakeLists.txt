@@ -25,7 +25,6 @@ endif()
 
 FetchContent_MakeAvailable(googletest)
 
-# Shared application logic
 add_library(Image2ASCII_core
     src/ASCIIConverter.cpp
     src/Renderer.cpp
@@ -41,8 +40,6 @@ target_link_libraries(Image2ASCII_core PUBLIC
     ${OpenCV_LIBS}
 )
 
-
-# Main application
 add_executable(Image2ASCII
     src/Image2ASCII.cpp
     src/ASCIIConverter.cpp
@@ -61,7 +58,7 @@ target_link_libraries(Image2ASCII PRIVATE
     Image2ASCII_core
 )
 
-# Unit tests
+
 enable_testing()
 
 add_executable(Image2ASCII_tests

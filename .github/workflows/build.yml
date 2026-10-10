@@ -26,12 +26,10 @@ jobs:
         run: |
           cmake -B build -S . `
             -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
-            -DVCPKG_TARGET_TRIPLET=x64-windows `
-            -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded$<$<Config:Debug>:Debug>"
+            -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build Project
-        run: |
-          cmake --build build --Config Release
+        run: cmake --build build --config Release
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
