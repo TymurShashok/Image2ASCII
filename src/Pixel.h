@@ -12,6 +12,7 @@ class PIXEL
 	unsigned char  R = 0; // Red
 
 	double  Brightness = 0.0;
+
 public:
 
 	double getBrightness() {

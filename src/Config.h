@@ -3,15 +3,15 @@
 #include <string>
 #include <iostream>
 
-enum Color { BlackWhite, RGB };
-enum Symbols { Small, Medium, Large };
+enum class Color { BW, RGB };
+enum class Symbols { SMALL, MEDIUM, LARGE };
 
 struct Config
 {
 	std::string fileName = "image.jpg"; // Name of Image for ASCII transformation
 
-	Symbols symbols = Medium; // How Many Symbols in ASCII Image
-	Color colorMode = RGB; // Color of ASCII Image
+	Symbols symbols = Symbols::MEDIUM; // How Many Symbols in ASCII Image
+	Color colorMode = Color::RGB; // Color of ASCII Image
 
 	short width = 100; // Result Width
 	short height = 100; // Result Height
@@ -45,22 +45,22 @@ struct Config
 
 			if (std::string(argv[i]) == "--symbols") {
 				if (std::string(argv[i + 1]) == "Small" || std::string(argv[i + 1]) == "small") {
-					symbols = Small;
+					symbols = Symbols::SMALL;
 				}
-				else if (std::string(argv[i + 1]) == "Medium" || std::string(argv[i + 1]) == "medium") {
-					symbols = Medium;
+				else if (std::string(argv[i + 1]) == "medium" || std::string(argv[i + 1]) == "Medium") {
+					symbols = Symbols::MEDIUM;
 				}
 				else {
-					symbols = Large;
+					symbols = Symbols::LARGE;
 				}
 			}
 
 			if (std::string(argv[i]) == "--color") {
 				if (std::string(argv[i + 1]) == "RGB" || std::string(argv[i + 1]) == "rgb") {
-					colorMode = RGB;
+					colorMode = Color::RGB;
 				}
 				else {
-					colorMode = BlackWhite;
+					colorMode = Color::BW;
 				}
 			}
 
@@ -106,13 +106,13 @@ struct Config
 			hasFileName = true;
 		}
 		if (text == "--symbols") {
-			if (text2 == "small") { symbols = Small; }
-			if (text2 == "medium") { symbols = Medium; }
-			else { symbols = Large; }
+			if (text2 == "small") { symbols = Symbols::SMALL; }
+			else if (text2 == "medium") { symbols = Symbols::MEDIUM; }
+			else { symbols = Symbols::LARGE; }
 		}
 		if (text == "--color") {
-			if (text2 == "rgb") { colorMode = RGB; }
-			if (text2 == "blackwhite") { colorMode = BlackWhite; }
+			if (text2 == "RGB") { colorMode = Color::RGB; }
+			if (text2 == "BW") { colorMode = Color::BW; }
 		}
 		if (text == "--width") {
 			width = std::stoi(text2);

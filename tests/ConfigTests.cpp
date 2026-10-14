@@ -11,8 +11,8 @@ TEST(ConfigTest, ReturnsDefaultValue) {
 	Config conf;
 
 	EXPECT_EQ(conf.fileName, "image.jpg");
-	EXPECT_EQ(conf.colorMode, RGB);
-	EXPECT_EQ(conf.symbols, Medium);
+	EXPECT_EQ(conf.colorMode, Color::RGB);
+	EXPECT_EQ(conf.symbols, Symbols::MEDIUM);
 
 	EXPECT_EQ(conf.width, 100);
 	EXPECT_EQ(conf.height, 100);
@@ -70,27 +70,27 @@ TEST(ConfigTest, ReturnsUpdateThoughtCMD) {
 
 
 	argv[1] = { "--color" };
-	argv[2] = { "rgb" };
+	argv[2] = { "RGB" };
 
 	conf = Config(argc, argv);
 
-	EXPECT_EQ(conf.colorMode, RGB);
+	EXPECT_EQ(conf.colorMode, Color::RGB);
 
 	argv[1] = { "--symbols" };
-	argv[2] = { "medium" };
+	argv[2] = { "large" };
 
 	conf = Config(argc, argv);
 
-	EXPECT_EQ(conf.symbols, Medium);
+	EXPECT_EQ(conf.symbols, Symbols::LARGE);
 
 	int argc2 = 9;
-	char* argv2[9] = { "Image2ASCII.exe" ,"--filename","image2.jpg","--symbols","small","--color","blackwhite","--scale" ,"0.6" };
+	char* argv2[9] = { "Image2ASCII.exe" ,"--filename","image2.jpg","--symbols","small","--color","BW","--scale" ,"0.6" };
 
 	conf = Config(argc2, argv2);
 
 	EXPECT_EQ(conf.fileName, "image2.jpg");
-	EXPECT_EQ(conf.symbols, Small);
-	EXPECT_EQ(conf.colorMode, BlackWhite);
+	EXPECT_EQ(conf.symbols, Symbols::SMALL);
+	EXPECT_EQ(conf.colorMode, Color::BW);
 	EXPECT_EQ(conf.scale, 0.6);
 }
 
@@ -114,8 +114,8 @@ TEST(ConfigTest, ReturnsConfigUpdate) {
 	EXPECT_EQ(conf.hasCustomScale, true);
 
 	conf.update("--symbols", "large");
-	EXPECT_EQ(conf.symbols, Large);
+	EXPECT_EQ(conf.symbols, Symbols::LARGE);
 
-	conf.update("--color", "rgb");
-	EXPECT_EQ(conf.colorMode, RGB);
+	conf.update("--color", "Color::RGB");
+	EXPECT_EQ(conf.colorMode, Color::RGB);
 }

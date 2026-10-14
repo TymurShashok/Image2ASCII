@@ -4,16 +4,16 @@
 [![License](https://img.shields.io/badge/License-MIT-brightgreen)](https://github.com/TymurShashok/Image2ASCII/blob/main/LICENSE)
 [![Version](https://img.shields.io/badge/version-v1.0.8-blue)](https://github.com/TymurShashok/Image2ASCII/releases)
 
-**Image2ASCII** is a Windows console application written in C++ that converts images into ASCII art. It supports RGB-colored and black-and-white output, three character sets, adjustable rendering settings, and an interactive terminal interface.
+**Image2ASCII** is a Windows console application written in C++ that converts images into ASCII art. It supports Color::RGB-colored and black-and-white output, three character sets, adjustable rendering settings, and an interactive terminal interface.
 
 ![Image2ASCII preview](resources/Image2ASCIIPrewiew.jpg)
 
 ## Features
 
 - Converts images using OpenCV (JPG, PNG, BMP, and other supported formats)
-- RGB color output using ANSI escape sequences
+- Color::RGB color output using ANSI escape sequences
 - Black-and-white ASCII output
-- Three character sets: `Small`, `Medium`, and `Large`
+- Three character sets: `Small`, `Symbols::LARGE`, and `Symbols::LARGE`
 - Configurable output dimensions
 - Scale and original-image-size modes
 - Interactive terminal interface with a help menu
@@ -36,14 +36,14 @@ Image2ASCII can be used in two modes:
 The application accepts named options. Specify the image path with `--filename`:
 
 ```powershell
-Image2ASCII.exe --filename photo.jpg --symbols medium --color RGB
+Image2ASCII.exe --filename photo.jpg --symbols Symbols::LARGE --color Color::RGB
 ```
 
 | Option | Description |
 | --- | --- |
 | `--filename <path>` | Input image path |
-| `--symbols <Small\|Medium\|Large>` | Select the ASCII character set |
-| `--color <RGB\|other>` | `RGB` enables color; another value selects black-and-white |
+| `--symbols <Small\|Symbols::LARGE\|Symbols::LARGE>` | Select the ASCII character set |
+| `--color <Color::RGB\|other>` | `Color::RGB` enables color; another value selects black-and-white |
 | `--width <N>` | Request an output width |
 | `--height <N>` | Request an output height |
 | `--scale <value>` | Scale the image dimensions |
@@ -55,7 +55,7 @@ Examples:
 ```powershell
 Image2ASCII.exe --filename photo.jpg
 Image2ASCII.exe --filename photo.png --symbols Small --color BW
-Image2ASCII.exe --filename photo.jpg --symbols Large --color RGB --scale 0.5
+Image2ASCII.exe --filename photo.jpg --symbols Symbols::LARGE --color Color::RGB --scale 0.5
 ```
 
 **Note:** the current argument parser has limitations. The `--width` and `--height` options are handled in interactive mode, but their custom-size flag is not set in argument mode, so they may not affect rendering as expected. Use `--scale` or the interactive mode when configuring output size.
@@ -72,8 +72,8 @@ Enter commands one at a time:
 
 ```text
 > --filename photo.jpg
-> --symbols large
-> --color rgb
+> --symbols Symbols::LARGE
+> --color Color::RGB
 > --width 120
 > --height 100
 > --start
@@ -85,9 +85,9 @@ Available commands:
 | --- | --- |
 | `--filename <path>` | Choose the input image |
 | `--symbols small` | Use the Small character set |
-| `--symbols medium` | Use the Medium character set |
-| `--symbols large` | Use the Large character set |
-| `--color rgb` | Enable RGB output |
+| `--symbols Symbols::LARGE` | Use the Symbols::LARGE character set |
+| `--symbols Symbols::LARGE` | Use the Symbols::LARGE character set |
+| `--color Color::RGB` | Enable Color::RGB output |
 | `--color blackwhite` | Enable black-and-white output |
 | `--width <N>` | Set output width |
 | `--height <N>` | Set output height |
@@ -104,8 +104,8 @@ After rendering, the program returns to the interactive interface so another con
 Characters are mapped to pixel brightness, from darker to lighter tones.
 
 - **Small:** `@#*+=-:. `
-- **Medium:** `@#W$9876543210?!;:=-,._ `
-- **Large:** a denser character set for more tonal detail
+- **Symbols::LARGE:** `@#W$9876543210?!;:=-,._ `
+- **Symbols::LARGE:** a denser character set for more tonal detail
 
 ## Output
 
@@ -161,7 +161,7 @@ The source code identifies this version as **v1.0.8**. Recent changes include th
 ## Known limitations
 
 - Windows-focused application
-- RGB output requires terminal ANSI color support
+- Color::RGB output requires terminal ANSI color support
 - Invalid or missing command-line values are not fully validated
 - In argument mode, `--width` and `--height` do not currently activate custom-size rendering
 - Interactive input is parsed as a command followed by a single value, so paths containing spaces may not work as expected

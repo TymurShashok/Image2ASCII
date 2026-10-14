@@ -43,15 +43,15 @@ TEST(ASCIIConverterTest, ReturnsAverageBrightnessSymbol) {
 	converter.setGreen(128);
 	converter.setRed(128);
 
-	conf.symbols = Small;	
+	conf.symbols = Symbols::SMALL;	
 	EXPECT_NEAR(converter.getBrightness(), 128, 0.1);
 	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '=');
 
-	conf.symbols = Medium;
+	conf.symbols = Symbols::MEDIUM;
 	EXPECT_NEAR(converter.getBrightness(), 128, 0.1);
 	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '1');
 
-	conf.symbols = Large;
+	conf.symbols = Symbols::LARGE;
 	EXPECT_NEAR(converter.getBrightness(), 128, 0.1);
 	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '{');
 }

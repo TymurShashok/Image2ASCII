@@ -3,6 +3,8 @@
 #include "Pixel.h"
 #include "Config.h"
 
+enum MediaType {UNKNOWN, IMAGE, VIDEO};
+
 /**
 *@Class ASCIIConverter 
 *@Brief For convert Pixel-Data to ASCII Symbols 
@@ -10,6 +12,7 @@
 class ASCIIConverter 
 {
 	PIXEL pixel; 
+
 public:
 
 	/**
@@ -43,9 +46,11 @@ public:
 		pixel.setGreen(green);
 	}
 
+	std::string_view symbolChoice(const Config& conf);
+
 	/**
 	* @brief Function for Converting brightness of Pixel to ASCII Symbol
 	* @return symbol ASCII, visual identical to brightness;
 	*/
-	char BrightnessToASCIISymbol(const Config& conf);
+	MediaType detectMediaType(const Config& conf);
 };

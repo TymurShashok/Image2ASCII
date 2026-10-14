@@ -17,7 +17,7 @@ public:
 	void printError(const Config& conf);
 	void printHelpMenu();
 	void PrintTab();
-	std::string printASCIISymbols(ASCIIConverter ASCIIConverter, const Config& conf);
 	void renderASCIIImage(ASCIIConverter ASCIIConverter, cv::Mat image, const Config& conf);
+	void renderASCIIVideo(ASCIIConverter ASCIIConverter,cv::VideoCapture video, const Config& conf);
 
 };
