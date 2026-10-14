@@ -15,8 +15,14 @@ TEST(ASCIIConverterTest, ReturnsDarkestSymbol) {
 	converter.setGreen(0);
 	converter.setRed(0);
 
+	std::string_view symbols = converter.symbolChoice(conf);
+
+	int index = std::round((converter.getBrightness() * (symbols.size() - 1) / 255));
+	
+	unsigned char symb = symbols[index];
 	ASSERT_EQ(converter.getBrightness(), 0);
-	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '@');
+	
+	EXPECT_EQ(symb, '@');
 	
 }
 
@@ -29,8 +35,12 @@ TEST(ASCIIConverterTest, ReturnsBrightestSymbol) {
 	converter.setGreen(255);
 	converter.setRed(255);
 
+
+	std::string_view symbols = converter.symbolChoice(conf);
+
+	int index = std::round((converter.getBrightness() * (symbols.size() - 1) / 255));
 	ASSERT_EQ(converter.getBrightness(), 255);
-	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), ' ');	
+	EXPECT_EQ(symbols[index], ' ');
 
 }
 
@@ -43,15 +53,27 @@ TEST(ASCIIConverterTest, ReturnsAverageBrightnessSymbol) {
 	converter.setGreen(128);
 	converter.setRed(128);
 
+
+	std::string_view symbols;
+	int index;
+
+
 	conf.symbols = Symbols::SMALL;	
+	symbols = converter.symbolChoice(conf);
+	index = std::round((converter.getBrightness() * (symbols.size() - 1) / 255));
+
 	EXPECT_NEAR(converter.getBrightness(), 128, 0.1);
-	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '=');
+	EXPECT_EQ(symbols[index], '=');
 
 	conf.symbols = Symbols::MEDIUM;
+	symbols = converter.symbolChoice(conf);
+	index = std::round((converter.getBrightness() * (symbols.size() - 1) / 255));
 	EXPECT_NEAR(converter.getBrightness(), 128, 0.1);
-	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '1');
+	EXPECT_EQ(symbols[index], '1');
 
 	conf.symbols = Symbols::LARGE;
+	symbols = converter.symbolChoice(conf);
+	index = std::round((converter.getBrightness() * (symbols.size() - 1) / 255));
 	EXPECT_NEAR(converter.getBrightness(), 128, 0.1);
-	EXPECT_EQ(converter.BrightnessToASCIISymbol(conf), '{');
+	EXPECT_EQ(symbols[index], '{');
 }
