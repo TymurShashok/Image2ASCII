@@ -2,11 +2,16 @@
 #include "Pixel.h"
 #include "ASCIIConverter.h"
 
-#include <fstream>
-#include <opencv2/opencv.hpp>
-#include <windows.h>
 #include <iostream>
 #include <string>
+#include <fstream>
+
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/videoio.hpp>
+
+#include <windows.h>
 
 void Renderer::enableANSIColors(const Config& conf)
 {
