@@ -19,7 +19,7 @@ jobs:
 
       - name: Install OpenCV via vcpkg
         run: |
-          vcpkg install opencv4[core,jpeg,png]:x64-windows
+          vcpkg install opencv4[core,highgui,imgcodecs,imgproc,videoio,jpeg,png]:x64-windows
 
       - name: Configure CMake
         shell: powershell
